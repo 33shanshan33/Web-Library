@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>6.Js 的原型和继承</title>
+</head>
+<body>
+<pre>
+    1.什么是原型
+    原型主要是指函数，特别是构造函数都有一个prototype属性，这个属性引用了一个对象
+    ，即原型对象，也简称原型，原型对象初始是空的，也就是没有一个成员（即原型属性和原型方法）,
+    但是，一旦定义了原型属性或原型方法，则所有通过该构造函数实例化出来的所有对象，都继承了这
+    些原型属性和原型方法，这是通过内部的_proto_链来实现的。
+</pre>
+
+<h3>实现继承的五种方法</h3>
+
+<script type="text/javascript">
+    function Animal(){
+        this.pp = 'animal';
+    }
+    function Cat(name,color){
+        // 1.构造函数法
+//        Animal.apply(this,arguments);
+        this.name = name;
+        this.color = color;
+
+    }
+
+
+    //2.prototype模式
+//    Cat.prototype = new Animal();
+//    Cat.prototype.constructor = Cat;
+
+    //3.prototype 继承
+    // 缺点改写 　　function Animal(){ } Animal.prototype.species = "动物";
+//    Cat.prototype = Animal.prototype;
+//    Cat.prototype.constructor = Cat;
+
+
+
+
+    　　    　　function Animal(){}
+　　Animal.prototype.pp = "动物";
+//然后，再写一个函数，实现属性拷贝的目的。
+　　function extend2(Child, Parent) {
+　　　　var p = Parent.prototype;
+　　　　var c = Child.prototype;
+　　　　for (var i in p) {
+　　　　　　c[i] = p[i];
+　　　　　　}
+　　　　c.uber = p;
+　　}
+//这个函数的作用，就是将父对象的prototype对象中的属性，一一拷贝给Child对象的prototype对象。
+//使用的时候，这样写：
+　　extend2(Cat, Animal);
+
+    console.log(Animal.prototype);
+
+    var cat = new Cat('dd','red');
+    console.log(cat);
+    alert(cat.pp)
+
+
+
+</script>
+
+
+
+
+
+</body>
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>4.html 的加载顺序是什么样的</title>
+</head>
+<body>
+<pre>
+
+3.1 首先载入html代码，发现head 标签里面有个关于css的link标签，
+3.2 浏览器发出css请求，收到服务器返回的css
+3.3 继续渲染body 的内容，并且css已经拿到手
+3.4 发现有image 标签，发生image请求，继续渲染，不需要等图片加载完成
+3.5接收到返回的图片。由于图片占用了面积，因此浏览器要回过头来从这里渲染
+3.6 发现有js ，赶快执行。执行完之后才能继续后续的渲染，阻碍页面的渲染
+3.7 盼来了html的结束标签。浏览器泪流满面
+3.8 还没完，用户点了一下换肤，Javascript让浏览器换了一下＜link＞标签的CSS路径
+3.9 浏览器召集了在座的各位＜div＞＜span＞＜ul＞＜li＞们，“大伙儿收拾收拾行李，咱得重新来过……”，
+</pre>
+</body>
+</html>

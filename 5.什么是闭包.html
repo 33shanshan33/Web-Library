@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>5.什么是闭包</title>
+</head>
+<body>
+<pre>
+    当内部函数 在定义它的作用域 的外部 被引用时,就创建了该内部函数的闭包
+    ,如果内部函数引用了位于外部函数的变量,当外部函数调用完毕后,这些变量在内存
+    不会被 释放,因为闭包需要它们.
+</pre>
+<h2>闭包演示</h2>
+
+<ul>
+    0000000
+</ul>
+<ul>
+    <li>1111111</li>
+    <li>2222222</li>
+    <li>3333333</li>
+    <li>4444444</li>
+    <li>5555555</li>
+</ul>
+
+<script type="text/javascript">
+
+
+    window.onload = function(){
+
+//querySelector和querySelectorAll是W3C提供的 新的查询接口，其主要特点如下：
+//
+//1、querySelector只返回匹配的第一个元素，如果没有匹配项，返回null。
+//2、querySelectorAll返回匹配的元素集合，如果没有匹配项，返回空的nodelist(节点数组)。
+//3、返回的结果是静态的，之后对document结构的改变不会影响到之前取到的结果。
+//
+//这两个方法都可以接受三种类型的参数：id(#)，class(.)，标签，很像jquery的选择器。
+//var obj = document.querySelector("#id");
+//
+//var obj = document.querySelector(".classname");
+//var obj = document.querySelector("div");
+//var el = document.body.querySelector("style[type='text/css'], style:not([type])");
+//var elements = document.querySelectorAll("#score>tbody>tr>td:nth-of-type(2)");
+//var elements = document.querySelectorAll("#id1, #id2, .class1, class2, div a, #list li img");
+//目前IE8+，ff，chrome都支持此api（IE8中的selector string只支持css2.1的）
+
+
+
+        var oUl = document.querySelector('ul');
+        console.log(oUl)
+        var oLi = document.querySelectorAll('li');
+
+
+
+        //一直会弹出5,i没有被释放
+
+//        for(var i = 0; i<oLi.length;i++){
+//
+//            oLi[i].onclick = function(){
+//                alert(i)
+//            }
+//
+//        }
+
+
+
+
+
+        //添加索引的方法
+        //        for(var i = 0; i<oLi.length;i++){
+        //            oLi[i].index = i;
+        //            oLi[i].onclick = function(){
+        //                alert(this.index)
+        //            }
+        //        }
+
+        //加一层闭包
+//        for(var i = 0; i<oLi.length;i++){
+//            (function(arg){
+//                oLi[i].onclick = function(){
+//                alert(arg)
+//            }
+//            })(i)
+//
+//        }
+
+
+//  function init5() {
+//   var pAry = document.getElementsByTagName("p");
+//   for( var i=0; i<pAry.length; i++ ) {
+//    pAry[i].onclick = function(arg) {
+//        return function() {//返回一个函数
+//        alert(arg);
+//      }}(i);
+//   }
+//}
+
+
+        for(var i = 0; i<oLi.length;i++){
+            oLi[i].onclick = function(arg){
+                return function (){
+                    alert(arg)
+                }
+            }(i)
+        }
+    }
+
+
+
+</script>
+
+
+
+
+</body>
+</html>

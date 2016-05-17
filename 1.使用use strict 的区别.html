@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>1.使用use strict 的区别</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+    (function abc(x,b){
+        //有use strict this 为undefined,没有为window
+
+        //'use strict';
+
+
+        console.log(arguments);
+
+        //对于arguments 实参，是个类数组，没有数组的slice方法  修改不了。
+        //有use stric arguments 修改没用
+        alert(arguments.length);
+        arguments[0] = 9;
+        alert(x);
+
+        console.log(this);
+
+    })(1,2);
+
+
+</script>
+
+
+</body>
+</html>

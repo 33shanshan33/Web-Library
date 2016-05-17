@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>2.js 的同源策略和JSONP</title>
+</head>
+<body>
+
+<P>
+    同源策略是指协议，主机和端口 相同，就是为同源，不管后面在跟什么参数
+</P>
+<P style="color: red">
+
+    Jsonp 是在客户端生成1个callback回调，之后通过script标签把这个名称发到服务器端。
+服务器端以javascript 语法的方式包装一下json数据，生成1个函数调用，函数名称是callback,
+客户端解析script，并且执行返回的javascript文档。
+
+
+</P>
+
+</body>
+</html>

@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>9.Angular 怎么实现的双向绑定</title>
+</head>
+<body>
+
+<pre>
+
+angular 的双向绑定，Angular使用了$watch API来监控$scope上的Model的改变。在进行$digest
+进行部分Dom 的渲染和更新
+
+$watch 不是无休止的调用setInterval ，而主要是通过
+捕获dom 事件触发，ajax 回调触发，location 变更触发，
+    $setTimeout 触发 手动调用scope.$apply() 触发 脏检查机制 。
+
+对于每个ngDoel 的。都绑定在对应的scope 上面。
+每一个$watch 就像1双眼睛一样，随时观察所有绑定值的改变。这就是angular 最大的瓶颈，
+    数据太多，$digest 花费时间越多，越影响DOM 渲染</pre>
+
+</body>
+</html>
