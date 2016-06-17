@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>11.javascript 函数重载解析</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+    /*
+    * 传统方法一
+    * */
+    var overrideMethod = function () {
+        switch (arguments.length) {
+            case 0 :
+                console.log("class no body");
+                break;
+            case 1 :
+                console.log("class has one student");
+                break;
+            default :
+                console.log("class has more students");
+        }
+    };
+
+    overrideMethod("test","blue"); //class has more students
+    overrideMethod("test-blue"); //class has one student
+    overrideMethod(); //class no body
+
+    /*
+    * 我们希望对象Company拥有一个find方法，当不传任何参数时，
+    * 就会把Company.names里面的所有元素返回来；
+    * 因为find方法是根据参数的个数不同而执行不同的操作的，
+    * 所以，需要有一个overrideCompanyFind方法，能够如下的为Company添加find的重载：
+    * */
+
+    var company = {
+        names : ["baron" , "Andy" ,"Lily" , "Blures"],
+        find : function () {
+            return this.names.length
+        }
+    };
+    var overrideCompanyFind = function (object , method , cb) {
+        var oldMethod = object[method];
+        //给object 重新赋予新的方法
+        object[method] = function () {
+            if (cb.length == arguments.length) {
+               return cb.apply(this,arguments)
+            }else if(typeof oldMethod== 'function'){
+               return oldMethod.apply(this,arguments)
+            }
+        };
+
+    };
+
+    overrideCompanyFind(company,'find',function (name , name2) {
+        return this.names
+    });
+    overrideCompanyFind(company,'find',function (name) {
+        return name + '的位置是' + this.names.indexOf(name) + '排'
+    });
+
+    console.log(company.find()); //4
+    console.log(company.find('Lily')); // Lily的位置是2排
+    console.log(company.find('Lily','baron')); //["baron", "Andy", "Lily", "Blures"]
+</script>
+
+</body>
+</html>
