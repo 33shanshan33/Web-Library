@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html>
+<head lang="en">
+    <meta charset="UTF-8">
+    <title>12.创建对象的模式</title>
+</head>
+<body>
+
+<script type="text/javascript">
+
+//    能够根据接受的参数来构建一个包含所有必要信息的 Animate 对象。
+//    可以无数次地调用这个函数，而每次它都会返回一个包含三个属性一个方法的对象。
+//    工厂模式虽然解决了创建多个相似对象的问题，
+// 但却没有解决对象识别的问题（即怎样知道一个对象的类型） 。
+    //工厂模式
+    function Animate(name,age,color){
+        var animate = new Object();
+        animate.name = name;
+        animate.age = age;
+        animate.color = color;
+        animate.showName = function(){
+            console.log("My type is "+this.name)
+        };
+        return animate
+    }
+
+    var ani1 = Animate("dog",11,"red");
+    ani1.showName();
+    var ani2 = Animate("cat",11,"red");
+    ani2.showName();
+
+    console.log(ani1.showName == ani2.showName); //false
+
+    console.log(ani1.constructor);
+
+    console.log(ani1.constructor.hasOwnProperty("age"));
+
+
+//    随着 JavaScript的发展，又一个新模式出现了。
+//    使用构造函数的主要问题，就是每个方法都要在每个实例上重新创建一遍
+
+    //构造函数模式
+
+    function Animated(name,age,color){
+        this.name = name;
+        this.age = age;
+        this.color = color;
+        this.showName = function(){
+            console.log("My type is " + this.name)
+        }
+    }
+
+    var animate1 = new Animated("bird",11,"red");
+    animate1.showName();
+    var animate2 = new Animated("monkey",11,"brown");
+    animate2.showName();
+
+    //获取构造函数，返回函数
+    console.log(animate1.constructor == Animated); //true
+
+    console.log(animate1.constructor == animate2.constructor); //true
+    console.log(animate1.constructor.prototype == animate2.constructor.prototype); //true
+
+    //检测对象类型
+    console.log(animate1 instanceof Animated); //true
+
+    console.log(animate1.showName == animate1.showName); //true
+
+//    随着 JavaScript的发展，又一个新模式出现了。
+//    原型模式
+    function Animation(name,age,color){
+        this.name = name;
+        this.age = age;
+        this.color = color;
+    }
+    Animation.prototype.showName = function(){
+       console.log("My type is " + this.name)
+    };
+
+    var animation1 = new Animation("fox" ,22 ,"oriange");
+    animation1.chinaName = "狐狸";
+    animation1.showName();
+
+    var animation2 = new Animation("frog" ,22 ,"oriange");
+    animation2.showName();
+
+    console.log(animation2.constructor);
+     //function Animation(name,age,color){
+    //this.name = name;
+    //this.age = age;
+    //this.color = color;
+    //}
+
+    console.log(animation1.chinaName); //狐狸
+    console.log(animation2.chinaName); //undefined
+
+
+    //但与构造函数模式不同的是，新对象的这些属性和方法是由所有实例共享的。
+    //换句话说，animation1 和 animation2 访问的都是同一组属性和同一个 showName() 函数。
+    console.log(animation1.showName == animation2.showName)
+
+
+//  这个是简单的写法和原型没什么区别，唯一的区别是construct 不一样
+    function Animation_sample(name,age,color){
+        this.name = name;
+        this.age = age;
+        this.color = color;
+    }
+
+    Animation_sample.prototype = {
+        secondName : "milk" ,
+        sayColor : function(){
+            console.log(this.color)
+        }
+    };
+
+    var sampleAnim1 = new Animation_sample("follower",32,"green");
+    console.log(sampleAnim1.secondName);
+
+    var sampleAnim2 = new Animation_sample("dest",32,"green");
+    console.log(sampleAnim2.secondName);
+
+
+    console.log(sampleAnim2.constructor); // function Object() { [native code] }
+
+    //我们发现 constructor 这个构造函数变成了 function Object() { [native code]
+
+//    而我们在这里使用的语法，本质上完全重写了默认的 prototype 对象，
+// 因此 constructor 属性也就变成了新对象的 constructor 属性 （指向 Object 构造函数） ，
+// 不再指向 Person 函数。
+
+//解决办法很简单，手动指定
+
+
+
+    function Animation_fixbug(name,age,color){
+        this.name = name;
+        this.age = age;
+        this.color = color;
+    }
+
+    Animation_fixbug.prototype = {
+        //添加下面这句话
+        constructor : Animation_fixbug,
+
+
+        secondName : "fishers" ,
+        sayColor : function(){
+            console.log(this.color)
+        }
+    };
+
+    var sampleAnimfix1 = new Animation_fixbug("fish",32,"green");
+    console.log(sampleAnimfix1.secondName);
+
+    var sampleAnimfix2 = new Animation_fixbug("fishbird",32,"green");
+    console.log(sampleAnimfix2.secondName);
+
+
+    console.log(sampleAnimfix2.constructor); // function Object() { [native code]
+
+
+
+</script>
+
+</body>
+</html>
