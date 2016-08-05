@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <title>es6</title>
+  </head>
+  <body>
+
+    <script type="text/javascript">
+
+    //默认参数
+    var cat = function (age, color, type) {
+      var age = age || 2;
+      var color = color || 'red';
+      var type = type || 'bosimao';
+      console.log(age,color,type)
+      //2 "red" "bosimao"
+    }
+
+    var _cat = function(age=2,color='_red',type='_bosimao'){
+        console.log(age,color,type)
+        //2 "_red" "_bosimao"
+    }
+    cat()
+    _cat()
+
+    //字符串插值 , 用于字符串相连
+
+
+    var a = '代表A';
+    var b = '代表B';
+
+    var _all = '我既' + a + '也' + b;
+    var all = `我既${a}也${b}`
+
+    console.log(_all,all)
+    //注意解构赋值 必须用var 不能let
+
+    var oA = {a: 1 , b:()=>{return 3},c : 12};
+
+    var { a , b } = oA
+    //箭头函数,综合了插值和默认值
+
+    var aFn = (a,b=8)=>{
+      return `function , arguments ${a},${b}`
+    }
+
+
+    //class 记住 类首字母大写的规范 个人很喜欢这个OOP编程风格
+
+    class Abc {
+      constructor(language, length) {
+        this.name = 'ABC';
+        this.language = language
+        this.length = length
+      }
+
+      getLanguage(){
+        return `${this.language}`
+      }
+      nameString(){
+        return 'abc'
+      }
+    }
+
+    var ac = new Abc('english',26);
+
+    class DEF extends Abc {
+      //对于父类需要初始值的，继续的子类直接不报错，是undefined , 这个在swift 会报错，很赞的功能
+      //可以继承且重写 ，只不过swift 函数重写需要写 override 在函数前面
+      getLanguage(){
+        return 'DEF'
+      }
+
+
+    }
+    var df = new DEF()
+    //english ABC
+    console.log( ac.getLanguage() , ac.name)
+    //DEF ABC undefined
+    console.log(df.getLanguage() , df.name,df.language)
+
+
+  
+    </script>
+
+
+  </body>
+</html>
